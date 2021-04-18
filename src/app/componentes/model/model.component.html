@@ -1,0 +1,68 @@
+<form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+        <label>Nombre</label>
+        <input type="text" class="form-control" formControlName="nombre">
+        
+        <div class="error" *ngIf="formulario.controls.nombre.errors?.required && formulario.controls.nombre.touched">
+            El campo nombre es requerido
+        </div>
+        <p>{{ formulario.controls.nombre.errors | json }} </p>
+        
+        <div class="error" *ngIf="formulario.controls.nombre.errors?.minlength && formulario.controls.nombre.touched">
+            El campo debe tener al menos {{formulario.controls.nombre.errors.minlength.requiredLength }} caracteres
+        </div>
+        <!--
+        <div>
+            <p *ngIf="!formulario.controls.nombre.valid">Campo Invalido</p>
+        </div>
+        -->
+    </div>
+    <div class="form-group">
+        <label>Apellidos</label>
+        <input type="text" class="form-control" formControlName="apellidos">
+        <div class="error" *ngIf="formulario.controls.apellidos.errors?.maxlength && formulario.controls.apellidos.touched">
+            El campo apellidos no puede tener mas de {{ formulario.controls.apellidos.errors.maxlength.requiredLength }} caracteres
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Edad</label>
+        <input type="text" class="form-control" formControlName="edad">
+        <div class="error" *ngIf="formulario.controls.edad.errors?.edadValidacion && formulario.controls.edad.touched">
+            {{formulario.controls.edad.errors | json}}
+            El campo edad debe ser entre {{formulario.controls.edad.errors.edadValidacion.min}} años y {{formulario.controls.edad.errors.edadValidacion.max}} años
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Email</label>
+        <input type="text" class="form-control" formControlName="email">
+        <div class="error" *ngIf="formulario.controls.email.errors && formulario.controls.email.touched">
+            EL campo correo es erroneo
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Dni</label>
+        <input type="text" class="form-control" formControlName="dni">
+        <div class="error" *ngIf="formulario.controls.dni.errors && formulario.controls.dni.touched">
+            {{formulario.controls.dni.errors.dniValidar}}
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Password</label>
+        <input type="password" class="form-control" formControlName="password">
+    </div>
+    <div class="form-group">
+        <label>Repite Password</label>
+        <input type="password" class="form-control" formControlName="repitePassword">
+    </div>
+    <input type="text" value="Enviar" class="btn btn-block btn-success" [disabled]="!formulario.valid"/>
+
+    <input type="text" value="Enviar" class="btn btn-block btn-success" [disabled]="!formulario.valid"
+    *ngIf="formulario.valid"/>
+</form>
+
+{{formulario.value | json}}
+<div>
+    <p>EsValido: {{ formulario.valid }} </p>
+    <p>Dirty: {{ formulario.dirty }} </p>
+</div>
+
